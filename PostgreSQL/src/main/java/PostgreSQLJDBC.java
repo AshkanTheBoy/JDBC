@@ -1,15 +1,15 @@
 import java.sql.*;
 
-public class MySQLJDBC {
+public class PostgreSQLJDBC {
     private static Statement statement = null;
 
     public static void main(String[] args) throws SQLException {
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/students","root","")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/students","postgres","postgres")) {
             statement = connection.createStatement();
             statement.setQueryTimeout(30);
             //insert();
             //update();
-            delete();
+            //delete();
             readAll();
         } catch (SQLException e) {
             e.printStackTrace(System.err);
