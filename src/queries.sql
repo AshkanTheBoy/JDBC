@@ -88,7 +88,7 @@
     JOIN media_types ON tracks.mediatypeid=media_types.mediatypeid
     GROUP BY media_types.name
     UNION ALL
-    SELECT '------','-------' --опционально, но нет разделения на две секции - он сортирует по алфавиту
+    SELECT '------','-------'
     UNION ALL
     SELECT genres.name, COUNT(tracks.name) AS Count FROM tracks
     JOIN genres ON tracks.genreid=genres.genreid
