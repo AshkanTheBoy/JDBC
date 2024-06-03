@@ -37,11 +37,12 @@
 
 Вывести название трека, которое включает слово 'Man'
     SELECT name FROM tracks
-    WHERE name LIKE '%Man%';
+    WHERE name REGEXP '\bMan\b';
 
 Вывести 10 треков, название которых заканчивается цифрами
     SELECT name FROM tracks
-    WHERE name REGEXP '\d$';
+    WHERE name REGEXP '\d$'
+    LIMIT 10;
 
 Вывести альбомы и их исполнителей.
     SELECT albums.title, artists.name FROM albums
@@ -78,18 +79,9 @@
 
 Для каждого альбома вывести минимальную,
 максимальную и среднюю продолжительность треков
-    SELECT albums.title,MAX(milliseconds) AS Time FROM albums
+    SELECT albums.title,MAX(milliseconds) AS Longest,MIN(milliseconds) AS Shortest, AVG(milliseconds) AS Average_Time FROM albums
     JOIN tracks ON albums.albumid=tracks.albumid
-    UNION ALL
-    SELECT '-------','--------'
-    UNION ALL
-    SELECT albums.title,MIN(milliseconds) AS Time FROM  albums
-    JOIN tracks ON albums.albumid=tracks.albumid
-    UNION ALL
-    SELECT '-------','--------'
-    UNION ALL
-    SELECT albums.title,AVG(milliseconds) AS Time FROM albums
-    JOIN tracks ON albums.albumid=tracks.albumid;
+    GROUP BY albums.title;
 
 Количество треков по типу медиа и по жанрам
     SELECT media_types.name, COUNT(tracks.name) AS Count FROM tracks
@@ -105,4 +97,4 @@
 Вывести альбомы продолжительностью более 2 часов
     SELECT albums.title, tracks.milliseconds FROM albums
     JOIN tracks ON albums.albumid=tracks.albumid
-    WHERE milliseconds > 3600000;
+    WHERE milliseconds > 7200000; --таких нет
