@@ -5,7 +5,9 @@
 Вывести название самой короткой и самой длинной фонограммы
     SELECT name,milliseconds FROM tracks
     WHERE milliseconds = (SELECT MAX(milliseconds) FROM tracks)
-    UNION
+    UNION ALL
+    SELECT '-------','--------'
+    UNION ALL
     SELECT name, milliseconds FROM tracks
     WHERE milliseconds = (SELECT MIN(milliseconds) FROM tracks);
 
@@ -78,10 +80,14 @@
 максимальную и среднюю продолжительность треков
     SELECT albums.title,MAX(milliseconds) AS Time FROM albums
     JOIN tracks ON albums.albumid=tracks.albumid
-    UNION
+    UNION ALL
+    SELECT '-------','--------'
+    UNION ALL
     SELECT albums.title,MIN(milliseconds) AS Time FROM  albums
     JOIN tracks ON albums.albumid=tracks.albumid
-    UNION
+    UNION ALL
+    SELECT '-------','--------'
+    UNION ALL
     SELECT albums.title,AVG(milliseconds) AS Time FROM albums
     JOIN tracks ON albums.albumid=tracks.albumid;
 
@@ -89,7 +95,9 @@
     SELECT media_types.name, COUNT(tracks.name) AS Count FROM tracks
     JOIN media_types ON tracks.mediatypeid=media_types.mediatypeid
     GROUP BY media_types.name
-    UNION --опционально, но нет разделения на две секции - он сортирует по алфавиту
+    UNION ALL
+    SELECT '------','-------' --опционально, но нет разделения на две секции - он сортирует по алфавиту
+    UNION ALL
     SELECT genres.name, COUNT(tracks.name) AS Count FROM tracks
     JOIN genres ON tracks.genreid=genres.genreid
     GROUP BY genres.name;
